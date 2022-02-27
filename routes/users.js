@@ -4,10 +4,10 @@ const userController = require('../controllers/userController')
 const authenticate = require('../middleware/auth')
 
 router.get('/',authenticate,userController.index )
-//router.get('/show/:studentID',authenticate,studentController.show)
+router.get('/view/:id',authenticate,userController.userById)
 router.post('/login',userController.login)
 router.post('/register',userController.register)
-//router.put('/update/:id',authenticate,studentController.update)
-//router.delete('/destroy/:id',authenticate,studentController.destroy)
+router.put('/update/:id',authenticate,userController.updateUser)
+router.delete('/delete/:id',authenticate,userController.deleteUser)
 
 module.exports = router

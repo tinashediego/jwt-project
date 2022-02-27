@@ -86,14 +86,49 @@ const register=(async (req, res) => {
     }
   });
   
-  const index = (auth, (req, res) => {
-    User.find({}, function(err, users) {
-      
-  
-      res.status(200).send({response:users});  
-    });
+  const index = (req, res) => {
+    User.find((error, data) => {
+        if (error) {
+          return next(error)
+        } else {
+          res.json({response:data})
+        }
+      });
     //res.status(200).send("Welcome 🙌 ");
-  });
+  };
+
+  const userById = (req,res)=>{
+    User.findById(req.params.id, (error, data) => {
+        if (error) {
+          return next (error);
+        }else {
+          res.json(data)
+        }
+      })
+  };
+
+  const updateUser = (req,res,next)=>{
+    let id = req.params.id
+
+   
+    User.findByIdAndUpdate(id,{$set: req.body},{new:true})
+    .then(()=>{
+        res.json({message: "User updated successfully"})
+    }).catch(()=>{
+        res.json({message: "An error occured"})
+    })
+}
+
+const deleteUser = (req,res,next)=>{
+    let id = req.params.id
+
+    User.findByIdAndRemove(id)
+    .then(()=>{
+        res.json({message: "User removed successfully"})
+    }).catch(()=>{
+        res.json({message: "An error occured"})
+    })
+}
   
 
-  module.exports = {index, register, login}
+  module.exports = {index, register, login, userById, updateUser, deleteUser}
