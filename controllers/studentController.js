@@ -1,4 +1,3 @@
-
 const Student = require('../model/student')
 
 const index = (req,res,next)=>{
@@ -12,11 +11,9 @@ const index = (req,res,next)=>{
     })
 }
 
-
 const show = (req,res,next)=>{
-    let studentID = req.params.studentID
-
-    Student.findById(studentID).then(response=>{
+    let id = req.params.id
+    Student.findById(id).then(response=>{
         res.json({
             response
         })
@@ -43,9 +40,7 @@ const insert = (req,res,next)=>{
 }
 
 const update = (req,res,next)=>{
-    let id = req.params.id
-
-   
+    let id = req.params.id  
     Student.findByIdAndUpdate(id,{$set: req.body},{new:true})
     .then(()=>{
         res.json({message: "Student updated successfully"})
@@ -54,9 +49,8 @@ const update = (req,res,next)=>{
     })
 }
 
-const destroy = (req,res,next)=>{
-    let id = req.params.id
-
+const deleteStudent = (req,res,next)=>{
+    let id = req.params.id;
     Student.findByIdAndRemove(id)
     .then(()=>{
         res.json({message: "Student removed successfully"})
@@ -66,5 +60,5 @@ const destroy = (req,res,next)=>{
 }
 
 module.exports = {
-    destroy,show,index,insert,update
+    deleteStudent,show,index,insert,update
 }

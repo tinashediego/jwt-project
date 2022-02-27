@@ -1,17 +1,17 @@
 require("dotenv").config();
 require("./config/database").connect();
 const express = require("express");
-
+const cors = require("cors");
 const userRoute = require("./routes/users");
 const studentRoute = require("./routes/students");
-
-
 
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
-app.use('/api/user', userRoute)
-app.use('/api/student', studentRoute)
+app.use(cors());
+
+app.use('/api/user', userRoute);
+app.use('/api/student', studentRoute);
 
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {

@@ -2,8 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
-const auth = require("../middleware/auth");
-
+//const auth = require("../middleware/auth");
 
 const register=(async (req, res) => {
     try {
@@ -109,8 +108,6 @@ const register=(async (req, res) => {
 
   const updateUser = (req,res,next)=>{
     let id = req.params.id
-
-   
     User.findByIdAndUpdate(id,{$set: req.body},{new:true})
     .then(()=>{
         res.json({message: "User updated successfully"})
